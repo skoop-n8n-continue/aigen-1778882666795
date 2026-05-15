@@ -1,0 +1,477 @@
+{
+  "app_id": "aigen-1778882666795",
+  "document_version": 1,
+  "sections": {
+    "brand": {
+      "chain_name": {
+        "type": "text",
+        "label": "Chain Name",
+        "value": "FLAME & BUN"
+      },
+      "tagline": {
+        "type": "text",
+        "label": "Tagline",
+        "value": "Sizzle. Stack. Satisfy."
+      },
+      "primary_color": {
+        "type": "color",
+        "label": "Primary Color",
+        "value": "#C2410C"
+      },
+      "secondary_color": {
+        "type": "color",
+        "label": "Secondary Color",
+        "value": "#1F2937"
+      },
+      "accent_color": {
+        "type": "color",
+        "label": "Accent Color",
+        "value": "#FBBF24"
+      },
+      "background_color": {
+        "type": "color",
+        "label": "Background Color",
+        "value": "#111827"
+      },
+      "text_color": {
+        "type": "color",
+        "label": "Text Color",
+        "value": "#F9FAFB"
+      },
+      "logo": {
+        "type": "file",
+        "label": "Logo",
+        "value": "https://skoop-dev-code-agent.s3.us-east-1.amazonaws.com/n8n_continue%2Faigen-1778882666795%2Fassets%2Flogo_k7m2x9-1778882932742.png",
+        "meta": {
+          "accepted_formats": ["png", "jpg", "svg"],
+          "path": "assets/"
+        }
+      }
+    },
+    "locations": {
+      "type": "collection",
+      "label": "Locations",
+      "item_schema": {
+        "id": {
+          "type": "text",
+          "label": "ID"
+        },
+        "name": {
+          "type": "text",
+          "label": "Location Name"
+        },
+        "address": {
+          "type": "text",
+          "label": "Address"
+        },
+        "hours": {
+          "type": "text",
+          "label": "Hours"
+        }
+      },
+      "value": [
+        {
+          "id": "loc_a1b2c3",
+          "name": "Downtown",
+          "address": "123 Main Street",
+          "hours": "10am - 11pm"
+        },
+        {
+          "id": "loc_d4e5f6",
+          "name": "Riverside",
+          "address": "456 River Road",
+          "hours": "10am - 12am"
+        }
+      ]
+    },
+    "menu_categories": {
+      "type": "collection",
+      "label": "Menu Categories",
+      "item_schema": {
+        "id": {
+          "type": "text",
+          "label": "ID"
+        },
+        "name": {
+          "type": "text",
+          "label": "Category Name"
+        },
+        "icon": {
+          "type": "text",
+          "label": "Icon Emoji"
+        }
+      },
+      "value": [
+        {
+          "id": "cat_x1y2z3",
+          "name": "Signature Burgers",
+          "icon": "🍔"
+        },
+        {
+          "id": "cat_a4b5c6",
+          "name": "Loaded Fries",
+          "icon": "🍟"
+        },
+        {
+          "id": "cat_d7e8f9",
+          "name": "Fresh Salads",
+          "icon": "🥗"
+        },
+        {
+          "id": "cat_g0h1i2",
+          "name": "Drinks & Shakes",
+          "icon": "🥤"
+        }
+      ]
+    },
+    "menu_items": {
+      "type": "collection",
+      "label": "Menu Items",
+      "item_schema": {
+        "id": {
+          "type": "text",
+          "label": "ID"
+        },
+        "name": {
+          "type": "text",
+          "label": "Item Name"
+        },
+        "description": {
+          "type": "textarea",
+          "label": "Description"
+        },
+        "price": {
+          "type": "number",
+          "label": "Price",
+          "meta": {
+            "format": "currency"
+          }
+        },
+        "category": {
+          "type": "linked",
+          "label": "Category",
+          "meta": {
+            "collection": "menu_categories",
+            "display_field": "name"
+          }
+        },
+        "is_vegetarian": {
+          "type": "boolean",
+          "label": "Vegetarian"
+        },
+        "is_spicy": {
+          "type": "boolean",
+          "label": "Spicy"
+        },
+        "image": {
+          "type": "file",
+          "label": "Item Image",
+          "meta": {
+            "accepted_formats": ["jpg", "png", "webp"],
+            "path": "assets/menu/"
+          }
+        }
+      },
+      "value": [
+        {
+          "id": "item_m1n2o3",
+          "name": "Classic Flame Burger",
+          "description": "Beef patty, American cheese, pickles, special sauce",
+          "price": 9.99,
+          "category": "cat_x1y2z3",
+          "is_vegetarian": false,
+          "is_spicy": false,
+          "image": "https://skoop-dev-code-agent.s3.us-east-1.amazonaws.com/n8n_continue%2Faigen-1778882666795%2Fassets%2Fitem_m1n2o3_image_p4q5r6-1778882964112.png"
+        },
+        {
+          "id": "item_s4t5u6",
+          "name": "BBQ Bacon Stack",
+          "description": "Beef patty, crispy bacon, cheddar, BBQ sauce, onion rings",
+          "price": 12.99,
+          "category": "cat_x1y2z3",
+          "is_vegetarian": false,
+          "is_spicy": false,
+          "image": "https://skoop-dev-code-agent.s3.us-east-1.amazonaws.com/n8n_continue%2Faigen-1778882666795%2Fassets%2Fitem_s4t5u6_image_v7w8x9-1778882994062.png"
+        },
+        {
+          "id": "item_y0z1a2",
+          "name": "Spicy Jalapeño Crunch",
+          "description": "Beef patty, pepper jack, jalapeños, crispy onions",
+          "price": 11.49,
+          "category": "cat_x1y2z3",
+          "is_vegetarian": false,
+          "is_spicy": true,
+          "image": "https://skoop-dev-code-agent.s3.us-east-1.amazonaws.com/n8n_continue%2Faigen-1778882666795%2Fassets%2Fitem_y0z1a2_image_b3c4d5-1778883012413.png"
+        },
+        {
+          "id": "item_e6f7g8",
+          "name": "Mushroom Swiss Melt",
+          "description": "Beef patty, sautéed mushrooms, Swiss cheese, garlic aioli",
+          "price": 10.99,
+          "category": "cat_x1y2z3",
+          "is_vegetarian": false,
+          "is_spicy": false,
+          "image": "https://skoop-dev-code-agent.s3.us-east-1.amazonaws.com/n8n_continue%2Faigen-1778882666795%2Fassets%2Fitem_e6f7g8_image_h9i0j1-1778883035997.png"
+        },
+        {
+          "id": "item_k2l3m4",
+          "name": "Black Bean Veggie",
+          "description": "House-made black bean patty, avocado, chipotle mayo",
+          "price": 10.49,
+          "category": "cat_x1y2z3",
+          "is_vegetarian": true,
+          "is_spicy": false,
+          "image": "https://skoop-dev-code-agent.s3.us-east-1.amazonaws.com/n8n_continue%2Faigen-1778882666795%2Fassets%2Fitem_k2l3m4_image_n5o6p7-1778883063888.png"
+        },
+        {
+          "id": "item_q8r9s0",
+          "name": "Truffle Parmesan Fries",
+          "description": "Crispy fries tossed in truffle oil and parmesan",
+          "price": 6.99,
+          "category": "cat_a4b5c6",
+          "is_vegetarian": true,
+          "is_spicy": false,
+          "image": "https://skoop-dev-code-agent.s3.us-east-1.amazonaws.com/n8n_continue%2Faigen-1778882666795%2Fassets%2Fitem_q8r9s0_image_t1u2v3-1778883094637.png"
+        },
+        {
+          "id": "item_w4x5y6",
+          "name": "Loaded Chili Cheese Fries",
+          "description": "Fries smothered in chili, cheese, jalapeños, sour cream",
+          "price": 8.99,
+          "category": "cat_a4b5c6",
+          "is_vegetarian": false,
+          "is_spicy": true,
+          "image": "https://skoop-dev-code-agent.s3.us-east-1.amazonaws.com/n8n_continue%2Faigen-1778882666795%2Fassets%2Fitem_w4x5y6_image_z7a8b9-1778883126484.png"
+        },
+        {
+          "id": "item_c0d1e2",
+          "name": "Crispy Buffalo Chicken Salad",
+          "description": "Romaine, buffalo chicken, blue cheese, celery, ranch",
+          "price": 11.99,
+          "category": "cat_d7e8f9",
+          "is_vegetarian": false,
+          "is_spicy": true,
+          "image": "https://skoop-dev-code-agent.s3.us-east-1.amazonaws.com/n8n_continue%2Faigen-1778882666795%2Fassets%2Fitem_c0d1e2_image_f3g4h5-1778883153482.png"
+        },
+        {
+          "id": "item_i6j7k8",
+          "name": "Kale Caesar Salad",
+          "description": "Baby kale, parmesan crisps, croutons, caesar dressing",
+          "price": 9.49,
+          "category": "cat_d7e8f9",
+          "is_vegetarian": true,
+          "is_spicy": false,
+          "image": "https://skoop-dev-code-agent.s3.us-east-1.amazonaws.com/n8n_continue%2Faigen-1778882666795%2Fassets%2Fitem_i6j7k8_image_l9m0n1-1778883179355.png"
+        },
+        {
+          "id": "item_o2p3q4",
+          "name": "Vanilla Bean Shake",
+          "description": "Creamy vanilla bean ice cream, whipped cream",
+          "price": 5.99,
+          "category": "cat_g0h1i2",
+          "is_vegetarian": true,
+          "is_spicy": false,
+          "image": "https://skoop-dev-code-agent.s3.us-east-1.amazonaws.com/n8n_continue%2Faigen-1778882666795%2Fassets%2Fitem_o2p3q4_image_r5s6t7-1778883198881.png"
+        },
+        {
+          "id": "item_u8v9w0",
+          "name": "Chocolate Malt Shake",
+          "description": "Rich chocolate malt, toasted marshmallow",
+          "price": 6.49,
+          "category": "cat_g0h1i2",
+          "is_vegetarian": true,
+          "is_spicy": false,
+          "image": "https://skoop-dev-code-agent.s3.us-east-1.amazonaws.com/n8n_continue%2Faigen-1778882666795%2Fassets%2Fitem_u8v9w0_image_x1y2z3-1778883225353.png"
+        },
+        {
+          "id": "item_a4b5c6",
+          "name": "Strawberry Basil Lemonade",
+          "description": "Fresh strawberries, basil, house lemonade",
+          "price": 4.99,
+          "category": "cat_g0h1i2",
+          "is_vegetarian": true,
+          "is_spicy": false,
+          "image": "https://skoop-dev-code-agent.s3.us-east-1.amazonaws.com/n8n_continue%2Faigen-1778882666795%2Fassets%2Fitem_a4b5c6_image_d7e8f9-1778883246468.png"
+        }
+      ]
+    },
+    "daily_specials": {
+      "type": "collection",
+      "label": "Daily Specials",
+      "item_schema": {
+        "id": {
+          "type": "text",
+          "label": "ID"
+        },
+        "name": {
+          "type": "text",
+          "label": "Special Name"
+        },
+        "description": {
+          "type": "textarea",
+          "label": "Description"
+        },
+        "price": {
+          "type": "number",
+          "label": "Special Price",
+          "meta": {
+            "format": "currency"
+          }
+        },
+        "original_price": {
+          "type": "number",
+          "label": "Original Price",
+          "meta": {
+            "format": "currency"
+          }
+        },
+        "image": {
+          "type": "file",
+          "label": "Special Image",
+          "meta": {
+            "accepted_formats": ["jpg", "png", "webp"],
+            "path": "assets/specials/"
+          }
+        }
+      },
+      "value": [
+        {
+          "id": "spec_g1h2i3",
+          "name": "Smoky Chipotle Burger",
+          "description": "Beef patty, chipotle mayo, pepper jack, grilled onions",
+          "price": 10.99,
+          "original_price": 12.99,
+          "image": "https://skoop-dev-code-agent.s3.us-east-1.amazonaws.com/n8n_continue%2Faigen-1778882666795%2Fassets%2Fspec_g1h2i3_image_j4k5l6-1778883271526.png"
+        },
+        {
+          "id": "spec_m7n8o9",
+          "name": "Sweet Potato Fries Basket",
+          "description": "Crispy sweet potato fries with honey chipotle dip",
+          "price": 6.49,
+          "original_price": 7.99,
+          "image": "https://skoop-dev-code-agent.s3.us-east-1.amazonaws.com/n8n_continue%2Faigen-1778882666795%2Fassets%2Fspec_m7n8o9_image_p0q1r2-1778883301779.png"
+        }
+      ]
+    },
+    "combo_deals": {
+      "type": "collection",
+      "label": "Combo Deals",
+      "item_schema": {
+        "id": {
+          "type": "text",
+          "label": "ID"
+        },
+        "name": {
+          "type": "text",
+          "label": "Combo Name"
+        },
+        "description": {
+          "type": "textarea",
+          "label": "Description"
+        },
+        "price": {
+          "type": "number",
+          "label": "Combo Price",
+          "meta": {
+            "format": "currency"
+          }
+        },
+        "includes": {
+          "type": "textarea",
+          "label": "Includes"
+        }
+      },
+      "value": [
+        {
+          "id": "combo_s3t4u5",
+          "name": "Classic Combo",
+          "description": "Your choice of signature burger + fries + drink",
+          "price": 14.99,
+          "includes": "Classic Flame Burger or Black Bean Veggie + Truffle Fries + Any Drink"
+        },
+        {
+          "id": "combo_v6w7x8",
+          "name": "Bacon Stack Combo",
+          "description": "BBQ Bacon Stack + loaded fries + shake",
+          "price": 18.99,
+          "includes": "BBQ Bacon Stack + Loaded Chili Cheese Fries + Vanilla Bean Shake"
+        }
+      ]
+    },
+    "late_menu": {
+      "type": "collection",
+      "label": "Late Night Menu",
+      "item_schema": {
+        "id": {
+          "type": "text",
+          "label": "ID"
+        },
+        "name": {
+          "type": "text",
+          "label": "Item Name"
+        },
+        "description": {
+          "type": "textarea",
+          "label": "Description"
+        },
+        "price": {
+          "type": "number",
+          "label": "Price",
+          "meta": {
+            "format": "currency"
+          }
+        }
+      },
+      "value": [
+        {
+          "id": "late_y9z0a1",
+          "name": "Classic Flame Burger",
+          "description": "Beef patty, American cheese, pickles, special sauce",
+          "price": 9.99
+        },
+        {
+          "id": "late_b2c3d4",
+          "name": "Truffle Parmesan Fries",
+          "description": "Crispy fries tossed in truffle oil and parmesan",
+          "price": 6.99
+        },
+        {
+          "id": "late_e5f6g7",
+          "name": "Vanilla Bean Shake",
+          "description": "Creamy vanilla bean ice cream, whipped cream",
+          "price": 5.99
+        }
+      ]
+    },
+    "display_settings": {
+      "lunch_rush_start": {
+        "type": "text",
+        "label": "Lunch Rush Start Time",
+        "value": "11:00"
+      },
+      "lunch_rush_end": {
+        "type": "text",
+        "label": "Lunch Rush End Time",
+        "value": "14:00"
+      },
+      "late_night_start": {
+        "type": "text",
+        "label": "Late Night Start Time",
+        "value": "21:00"
+      },
+      "auto_mode": {
+        "type": "boolean",
+        "label": "Auto-Detect Time Mode",
+        "value": true
+      },
+      "rotation_interval": {
+        "type": "number",
+        "label": "Menu Rotation Interval (seconds)",
+        "value": 8,
+        "meta": {
+          "format": "integer"
+        }
+      }
+    }
+  }
+}

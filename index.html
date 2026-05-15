@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FLAME & BUN - Menu Board</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Space+Grotesk:wght@500;600;700&display=swap');
+
+    :root {
+      --primary: #C2410C;
+      --secondary: #1F2937;
+      --accent: #FBBF24;
+      --bg: #111827;
+      --text: #F9FAFB;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', system_ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow: hidden;
+      width: 100vw;
+      height: 100vh;
+    }
+
+    #app-container {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    #app-container.loaded {
+      opacity: 1;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px 48px;
+      background: linear-gradient(180deg, rgba(0,0,0,0.6) 0%, transparent 100%);
+      z-index: 100;
+    }
+
+    .logo-section {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .logo {
+      height: 72px;
+      width: auto;
+    }
+
+    .brand-text h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 42px;
+      font-weight: 700;
+      letter-spacing: -2px;
+      color: var(--text);
+    }
+
+    .brand-text p {
+      font-size: 14px;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      margin-top: -4px;
+    }
+
+    .location-info {
+      text-align: right;
+    }
+
+    .location-info .location-name {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .location-info .location-hours {
+      font-size: 14px;
+      color: #9CA3AF;
+      margin-top: 2px;
+    }
+
+    .mode-badge {
+      position: absolute;
+      top: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 8px 24px;
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      display: none;
+      align-items: center;
+      gap: 8px;
+      z-index: 200;
+    }
+
+    .mode-badge.lunch {
+      background: linear-gradient(135deg, #F59E0B, #D97706);
+      color: #111827;
+      display: flex;
+    }
+
+    .mode-badge.late {
+      background: linear-gradient(135deg, #374151, #1F2937);
+      color: #9CA3AF;
+      display: flex;
+    }
+
+    .main-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 0 48px 32px;
+      overflow: hidden;
+    }
+
+    .specials-section {
+      margin-bottom: 24px;
+    }
+
+    .section-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, var(--accent), transparent);
+    }
+
+    .specials-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .special-card {
+      background: linear-gradient(145deg, #1F2937, #111827);
+      border-radius: 20px;
+      overflow: hidden;
+      display: flex;
+      border: 1px solid rgba(251, 191, 36, 0.2);
+      position: relative;
+    }
+
+    .special-card::before {
+      content: 'TODAY';
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: var(--accent);
+      color: #111827;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 4px 12px;
+      border-radius: 100px;
+      letter-spacing: 1px;
+    }
+
+    .special-image {
+      width: 180px;
+      height: 140px;
+      object-fit: cover;
+    }
+
+    .special-info {
+      flex: 1;
+      padding: 20px 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .special-name {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .special-desc {
+      font-size: 13px;
+      color: #9CA3AF;
+      line-height: 1.5;
+      margin-bottom: 12px;
+    }
+
+    .special-price {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+    }
+
+    .special-price .new {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--accent);
+    }
+
+    .special-price .old {
+      font-size: 16px;
+      color: #6B7280;
+      text-decoration: line-through;
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    .menu-category {
+      background: #1F2937;
+      border-radius: 16px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .category-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .category-icon {
+      font-size: 24px;
+    }
+
+    .category-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .menu-items {
+      flex: 1;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      scrollbar-width: none;
+    }
+
+    .menu-items::-webkit-scrollbar {
+      display: none;
+    }
+
+    .menu-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .item-image {
+      width: 56px;
+      height: 56px;
+      border-radius: 12px;
+      object-fit: cover;
+      flex-shrink: 0;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .item-details {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .item-name {
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.3;
+      margin-bottom: 3px;
+    }
+
+    .item-desc {
+      font-size: 11px;
+      color: #6B7280;
+      line-height: 1.4;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .item-badges {
+      display: flex;
+      gap: 4px;
+      margin-top: 4px;
+    }
+
+    .badge {
+      font-size: 9px;
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+
+    .badge.veg {
+      background: #166534;
+      color: #86EFAC;
+    }
+
+    .badge.spicy {
+      background: #991B1B;
+      color: #FCA5A5;
+    }
+
+    .item-price {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--accent);
+      white-space: nowrap;
+    }
+
+    .footer {
+      padding: 16px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: #6B7280;
+      background: rgba(0,0,0,0.4);
+    }
+
+    .footer .locations {
+      display: flex;
+      gap: 32px;
+    }
+
+    .footer .location {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .footer .location::before {
+      content: '📍';
+    }
+
+    /* Lunch Rush Mode */
+    body.lunch-mode {
+      --bg: #0C111B;
+    }
+
+    body.lunch-mode .special-card {
+      border-color: #F59E0B;
+      box-shadow: 0 0 0 1px #F59E0B, 0 4px 20px rgba(245, 158, 11, 0.2);
+    }
+
+    body.lunch-mode .combo-section {
+      display: block !important;
+    }
+
+    /* Late Night Mode */
+    body.late-mode {
+      filter: brightness(0.7) saturate(0.8);
+    }
+
+    body.late-mode .header {
+      background: linear-gradient(180deg, rgba(0,0,0,0.8) 0%, transparent 100%);
+    }
+
+    .combo-section {
+      display: none;
+      margin-bottom: 24px;
+    }
+
+    .combo-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .combo-card {
+      background: linear-gradient(145deg, #1F2937, #111827);
+      border-radius: 16px;
+      padding: 20px;
+      border: 2px solid #F59E0B;
+    }
+
+    .combo-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+
+    .combo-name {
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .combo-price {
+      font-size: 24px;
+      font-weight: 800;
+      color: #F59E0B;
+    }
+
+    .combo-desc {
+      font-size: 13px;
+      color: #9CA3AF;
+      margin-bottom: 8px;
+    }
+
+    .combo-includes {
+      font-size: 12px;
+      color: #D1D5DB;
+      background: rgba(0,0,0,0.3);
+      padding: 10px 14px;
+      border-radius: 10px;
+      line-height: 1.5;
+    }
+
+    .late-menu-grid {
+      display: none;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    body.late-mode .late-menu-grid {
+      display: grid;
+    }
+
+    body.late-mode .menu-grid,
+    body.late-mode .specials-section,
+    body.late-mode .combo-section {
+      display: none;
+    }
+
+    .late-item {
+      background: #1F2937;
+      border-radius: 16px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .late-item-name {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .late-item-desc {
+      font-size: 13px;
+      color: #9CA3AF;
+      margin-bottom: 12px;
+    }
+
+    .late-item-price {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--accent);
+    }
+  </style>
+</head>
+<body>
+  <div id="app-container">
+    <header class="header">
+      <div class="logo-section">
+        <img class="logo" data-bind-src="brand.logo" src="https://skoop-dev-code-agent.s3.us-east-1.amazonaws.com/n8n_continue%2Faigen-1778882666795%2Fassets%2Flogo_k7m2x9-1778882932742.png" alt="FLAME & BUN">
+        <div class="brand-text">
+          <h1 data-bind-text="brand.chain_name">FLAME & BUN</h1>
+          <p data-bind-text="brand.tagline">Sizzle. Stack. Satisfy.</p>
+        </div>
+      </div>
+
+      <div class="location-info">
+        <div class="location-name" data-bind-text="locations.0.name">Downtown</div>
+        <div class="location-hours" data-bind-text="locations.0.hours">10am - 11pm</div>
+      </div>
+    </header>
+
+    <div class="mode-badge lunch" id="lunch-badge">
+      🔥 LUNCH RUSH COMBOS
+    </div>
+    <div class="mode-badge late" id="late-badge">
+      🌙 LATE NIGHT MENU
+    </div>
+
+    <main class="main-content">
+      <!-- Daily Specials -->
+      <div class="specials-section">
+        <div class="section-title">🔥 Daily Specials</div>
+        <div class="specials-grid" id="specials-grid">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <!-- Lunch Rush Combos -->
+      <div class="combo-section" id="combo-section">
+        <div class="section-title">⚡ Lunch Rush Combos</div>
+        <div class="combo-grid" id="combo-grid">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <!-- Late Night Menu -->
+      <div class="late-menu-grid" id="late-menu-grid">
+        <!-- Populated by JS -->
+      </div>
+
+      <!-- Menu Categories -->
+      <div class="menu-grid" id="menu-grid">
+        <!-- Populated by JS -->
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="locations">
+        <div class="location">
+          <span data-bind-text="locations.0.name">Downtown</span>
+          <span>·</span>
+          <span data-bind-text="locations.0.address">123 Main Street</span>
+        </div>
+        <div class="location">
+          <span data-bind-text="locations.1.name">Riverside</span>
+          <span>·</span>
+          <span data-bind-text="locations.1.address">456 River Road</span>
+        </div>
+      </div>
+      <div>Prices shown before tax · All items served fresh</div>
+    </footer>
+  </div>
+
+  <script>
+    let currentMode = 'regular';
+    let rotationIndex = 0;
+    let rotationTimer = null;
+
+    async function loadAppData() {
+      try {
+        const response = await fetch('data.json');
+        return await response.json();
+      } catch (error) {
+        console.error('Failed to load app data:', error);
+        return null;
+      }
+    }
+
+    function getCurrentMode(settings) {
+      if (!settings.auto_mode.value) return 'regular';
+
+      const now = new Date();
+      const hours = now.getHours();
+      const minutes = now.getMinutes();
+      const currentTime = hours * 60 + minutes;
+
+      const [lunchStartH, lunchStartM] = settings.lunch_rush_start.value.split(':').map(Number);
+      const [lunchEndH, lunchEndM] = settings.lunch_rush_end.value.split(':').map(Number);
+      const [lateStartH, lateStartM] = settings.late_night_start.value.split(':').map(Number);
+
+      const lunchStart = lunchStartH * 60 + lunchStartM;
+      const lunchEnd = lunchEndH * 60 + lunchEndM;
+      const lateStart = lateStartH * 60 + lateStartM;
+
+      if (currentTime >= lunchStart && currentTime < lunchEnd) {
+        return 'lunch';
+      } else if (currentTime >= lateStart) {
+        return 'late';
+      }
+      return 'regular';
+    }
+
+    function applyMode(mode) {
+      const body = document.body;
+      const lunchBadge = document.getElementById('lunch-badge');
+      const lateBadge = document.getElementById('late-badge');
+
+      body.classList.remove('lunch-mode', 'late-mode');
+      lunchBadge.style.display = 'none';
+      lateBadge.style.display = 'none';
+
+      if (mode === 'lunch') {
+        body.classList.add('lunch-mode');
+        lunchBadge.style.display = 'flex';
+      } else if (mode === 'late') {
+        body.classList.add('late-mode');
+        lateBadge.style.display = 'flex';
+      }
+    }
+
+    function renderSpecials(specials) {
+      const container = document.getElementById('specials-grid');
+      container.innerHTML = '';
+
+      specials.forEach((special, idx) => {
+        const card = document.createElement('div');
+        card.className = 'special-card';
+        card.innerHTML = `
+          <img class="special-image" data-bind-src="daily_specials.${idx}.image" src="${special.image}" alt="${special.name}">
+          <div class="special-info">
+            <div class="special-name" data-bind-text="daily_specials.${idx}.name">${special.name}</div>
+            <div class="special-desc" data-bind-text="daily_specials.${idx}.description">${special.description}</div>
+            <div class="special-price">
+              <span class="new" data-bind-currency="daily_specials.${idx}.price">$${special.price.toFixed(2)}</span>
+              <span class="old" data-bind-currency="daily_specials.${idx}.original_price">$${special.original_price.toFixed(2)}</span>
+            </div>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function renderCombos(combos) {
+      const container = document.getElementById('combo-grid');
+      container.innerHTML = '';
+
+      combos.forEach((combo, idx) => {
+        const card = document.createElement('div');
+        card.className = 'combo-card';
+        card.innerHTML = `
+          <div class="combo-header">
+            <div class="combo-name" data-bind-text="combo_deals.${idx}.name">${combo.name}</div>
+            <div class="combo-price" data-bind-currency="combo_deals.${idx}.price">$${combo.price.toFixed(2)}</div>
+          </div>
+          <div class="combo-desc" data-bind-text="combo_deals.${idx}.description">${combo.description}</div>
+          <div class="combo-includes" data-bind-text="combo_deals.${idx}.includes">${combo.includes}</div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function renderLateMenu(lateItems) {
+      const container = document.getElementById('late-menu-grid');
+      container.innerHTML = '';
+
+      lateItems.forEach((item, idx) => {
+        const card = document.createElement('div');
+        card.className = 'late-item';
+        card.innerHTML = `
+          <div class="late-item-name" data-bind-text="late_menu.${idx}.name">${item.name}</div>
+          <div class="late-item-desc" data-bind-text="late_menu.${idx}.description">${item.description}</div>
+          <div class="late-item-price" data-bind-currency="late_menu.${idx}.price">$${item.price.toFixed(2)}</div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function renderMenu(categories, allItems, showPrices = true) {
+      const container = document.getElementById('menu-grid');
+      container.innerHTML = '';
+
+      categories.forEach((category, catIdx) => {
+        const categoryItems = allItems
+          .map((item, idx) => ({ ...item, _idx: idx }))
+          .filter(item => item.category === category.id);
+
+        if (categoryItems.length === 0) return;
+
+        const categoryEl = document.createElement('div');
+        categoryEl.className = 'menu-category';
+
+        const header = document.createElement('div');
+        header.className = 'category-header';
+        header.innerHTML = `
+          <span class="category-icon">${category.icon}</span>
+          <span class="category-name" data-bind-text="menu_categories.${catIdx}.name">${category.name}</span>
+        `;
+        categoryEl.appendChild(header);
+
+        const itemsContainer = document.createElement('div');
+        itemsContainer.className = 'menu-items';
+
+        categoryItems.forEach(item => {
+          const idx = item._idx;
+          const itemEl = document.createElement('div');
+          itemEl.className = 'menu-item';
+
+          let badges = '';
+          if (item.is_vegetarian) badges += '<span class="badge veg">V</span>';
+          if (item.is_spicy) badges += '<span class="badge spicy">🌶</span>';
+
+          itemEl.innerHTML = `
+            <img class="item-image" data-bind-src="menu_items.${idx}.image" src="${item.image}" alt="${item.name}">
+            <div class="item-details">
+              <div class="item-name" data-bind-text="menu_items.${idx}.name">${item.name}</div>
+              <div class="item-desc" data-bind-text="menu_items.${idx}.description">${item.description}</div>
+              ${badges ? `<div class="item-badges">${badges}</div>` : ''}
+            </div>
+            ${showPrices ? `<div class="item-price" data-bind-currency="menu_items.${idx}.price">$${item.price.toFixed(2)}</div>` : ''}
+          `;
+          itemsContainer.appendChild(itemEl);
+        });
+
+        categoryEl.appendChild(itemsContainer);
+        container.appendChild(categoryEl);
+      });
+    }
+
+    function startRotation(data, interval) {
+      const categories = data.sections.menu_categories.value;
+      const allItems = data.sections.menu_items.value;
+      const container = document.getElementById('menu-grid');
+
+      if (rotationTimer) clearInterval(rotationTimer);
+
+      rotationTimer = setInterval(() => {
+        rotationIndex = (rotationIndex + 1) % Math.max(1, Math.ceil(allItems.length / 8));
+
+        container.style.transition = 'opacity 0.3s ease';
+        container.style.opacity = '0';
+
+        setTimeout(() => {
+          const startIdx = rotationIndex * 8;
+          const visibleItems = allItems.slice(startIdx, startIdx + 8);
+
+          container.innerHTML = '';
+          renderMenu(categories, visibleItems.length > 0 ? visibleItems : allItems, true);
+
+          container.style.transition = 'none';
+          container.style.opacity = '1';
+        }, 300);
+      }, interval * 1000);
+    }
+
+    async function init() {
+      const data = await loadAppData();
+      if (!data) return;
+
+      const brand = data.sections.brand;
+      const settings = data.sections.display_settings;
+
+      document.documentElement.style.setProperty('--primary', brand.primary_color.value);
+      document.documentElement.style.setProperty('--secondary', brand.secondary_color.value);
+      document.documentElement.style.setProperty('--accent', brand.accent_color.value);
+      document.documentElement.style.setProperty('--bg', brand.background_color.value);
+      document.documentElement.style.setProperty('--text', brand.text_color.value);
+
+      const specials = data.sections.daily_specials.value;
+      const combos = data.sections.combo_deals.value;
+      const lateItems = data.sections.late_menu.value;
+      const categories = data.sections.menu_categories.value;
+      const allItems = data.sections.menu_items.value;
+
+      renderSpecials(specials);
+      renderCombos(combos);
+      renderLateMenu(lateItems);
+      renderMenu(categories, allItems, true);
+
+      const mode = getCurrentMode(settings);
+      applyMode(mode);
+      currentMode = mode;
+
+      if (settings.auto_mode.value) {
+        setInterval(() => {
+          const newMode = getCurrentMode(settings);
+          if (newMode !== currentMode) {
+            currentMode = newMode;
+            applyMode(newMode);
+          }
+        }, 60000);
+      }
+
+      const interval = settings.rotation_interval.value || 8;
+      startRotation(data, interval);
+
+      document.getElementById('app-container').classList.add('loaded');
+    }
+
+    init();
+  </script>
+</body>
+</html>
